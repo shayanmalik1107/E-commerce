@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="images/nicee.png" type="image/png">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create New Account</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      width: 100%;
+    }
+
+    .background {
+      background-image: url("images/text.png");
+      background-color: #333;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-container {
+      background-image: url("images/luffy.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 350px;
+      height: 85vh;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .signup-form {
+      z-index: 1;
+      padding: 20px;
+      backdrop-filter: blur(0px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      color: white;
+      font-size: 0.9em;
+    }
+
+    .signup-form h2 {
+      margin-bottom: 5px;
+      font-size: 1.4em;
+      font-weight: bold;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    .signup-form input {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #C1B1B1;
+      color: #fff;
+      font-size: 0.95em;
+    }
+
+    .signup-form input::placeholder {
+      color: #ccc;
+    }
+
+    .signup-form input:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+
+    .name-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .name-row .form-group {
+      flex: 1;
+      min-width: 50%;
+    }
+
+    .signup-form button {
+      padding: 12px;
+      background-color: #456c74;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+    }
+
+    .signup-form button:hover {
+      background-color: #6A8287;
+    }
+
+    .password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-wrapper input {
+      flex: 1;
+      padding-right: 40px; /* space for the eye icon */
+    }
+    .custom-spinner {
+  width: 60px;
+  height: 60px;
+  animation: rotateFull 1s linear infinite;
+}
+
+@keyframes rotateFull {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      cursor: pointer;
+      font-size: 1.2em;
+      color: #444;
+    }
+
+    .new {
+      text-align: center;
+      color: #fff;
+      display: block;
+      margin-top: 10px;
+      text-decoration: underline;
+      cursor: pointer;
+    }.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 2s ease; /* for fade-in */
+}
+
+.popup.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.popup.fade-out {
+  transition: opacity 3s ease;
+  opacity: 0;
+}
+
+.popup-content {
+  background: white;
+  color: #333;
+  padding: 30px;
+  border-radius: 10px;
+  font-size: 1.3em;
+  text-align: center;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20; /* above popup */
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3; /* Light grey */
+  border-top: 6px solid #6208fc; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+
+  </style>
+</head>
+
+<body>
+  <div id="popup" class="popup hidden">
+    <div class="popup-content" id="popupContent"></div>
+  </div>
+  
+  <div class="background">
+    <div class="form-container">
+      <form class="signup-form" id="signupForm">
+        <h2>Create New Account</h2>
+
+        <div class="name-row">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input id="firstName"  maxlength="6" type="text" required />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input id="lastName"  maxlength="5" type="text" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="mobile">Mobile Number</label>
+          <input id="mobile" type="text" required />
+        </div>
+
+        <div class="form-group password-group">
+          <label for="password">Password</label>
+          <div class="password-wrapper">
+            <input id="password" type="password" required />
+            <img
+              id="togglePassword"
+              src="images/eye_hide.png"
+              width="25"
+              style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"
+              alt="Toggle password visibility"
+            />
+          </div>
+        </div>
+
+        <button type="submit">Submit</button>
+        <a class="new" href="signin.html">Already have an account?</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase App (core) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <!-- Firebase Auth (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <!-- Firebase Database (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script>
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBoq6J4z48v48p177NNDNfM10Z0pp2_Hh4",
+      authDomain: "animora-77260.firebaseapp.com",
+      projectId: "animora-77260",
+      storageBucket: "animora-77260.appspot.com",
+      messagingSenderId: "325483607948",
+      appId: "1:325483607948:web:c65b7846d7d4e946ba08a9",
+      measurementId: "G-8WS25C0WWT"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordInput = document.getElementById("password");
+
+      togglePassword.addEventListener("click", () => {
+        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput.setAttribute("type", type);
+        togglePassword.src = type === "password" ? "images/eye_hide.png" : "images/eyes.png";
+      });
+
+      const signupForm = document.getElementById("signupForm");
+
+      signupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        showLoading();
+
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const mobile = document.getElementById("mobile").value.trim();
+        const password = passwordInput.value;
+
+        // Basic validation (optional, you can extend)
+        if (!firstName || !lastName || !email || !mobile || !password) {
+          alert("Please fill in all fields.");
+          return;
+        }
+
+        // Create user with email and password
+        auth.createUserWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            const uid = user.uid;
+            const fullName = `${firstName} ${lastName}`;
+
+            // Save additional user data to Realtime Database
+            database.ref("users/" + uid).set({
+              Name: fullName,
+              Mobile: mobile,
+              Email: email
+            })
+            .then(() => {
+          // Show welcome popup and fade in
+document.getElementById("popupContent").textContent = `Welcome ${firstName}!`;
+const popup = document.getElementById("popup");
+const background = document.querySelector(".background");
+hideLoading();
+
+// Show popup and fade it in
+popup.classList.remove("hidden");
+setTimeout(() => {
+  popup.classList.add("show");
+  setTimeout(() => {
+    popup.classList.add("fade-out");
+    background.style.transition = "opacity 2s ease";
+    background.style.opacity = "0";
+
+    // Redirect after fade out (3s)
+    setTimeout(() => {
+      window.location.href = "Animora.html";
+    }, 1000);
+  }, 1000); // wait 2 seconds before fade-out starts
+
+}, 100); // slight delay to allow rendering
+
+
+            })
+            .catch((error) => {
+              alert("Failed to save user data: system defualt error " );
+hideLoading();
+            });
+          })
+          .catch((error) => {
+  const errorCode = error.code;
+
+  if (errorCode === 'auth/email-already-in-use') {
+    alert("This email is already registered. Try logging in instead.");
+  } else if (errorCode === 'auth/invalid-email') {
+    alert("The email address is invalid. Please check and try again.");
+  } else if (errorCode === 'auth/weak-password') {
+    alert("Password should be at least 6 characters long.");
+  } else {
+    alert("Failed to create user: " + error.message);
+  }
+
+  hideLoading();
+});
+
+      });
+    });
+    function showLoading() {
+  const loading = document.getElementById("loadingOverlay");
+  loading.classList.remove("hidden");
+}
+
+function hideLoading() {
+  const loading = document.getElementById("loadingOverlay");
+  loading.classList.add("hidden");
+}
+
+  </script>
+  <div id="loadingOverlay" class="loading-overlay hidden">
+    <img id="customSpinner" src="images/loading.png" class="custom-spinner" />
+  </div>
+  
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invoice</title>
+  <link rel="icon" href="images/nicee.png" type="image/png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"/>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Georgia", serif;
+      color: white;
+      background: #333 url('images/text.png') center/cover no-repeat;
+      position: relative;
+      text-align: center;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    body.fade-out {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    .header {
+      background-color: black;
+      padding: 20px 0;
+      position: relative;
+    }
+
+    .header h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 48px;
+      margin: 0;
+    }
+
+    .face-img {
+      position: absolute;
+      right: 20px;
+      top: -10px;
+      height: 175px; 
+    }
+    .brand-name {
+  font-family: "Great Vibes", cursive;
+  font-size: 40px;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  color: #ffffff;
+  z-index: 1;
+}
+
+    .user-info {
+      margin-top: 40px;
+      font-size: 18px;
+      line-height: 2;
+    }
+
+    .shirt-gallery {
+      background-color: #111;
+      margin: 40px auto;
+      border-radius: 10px;
+      padding: 20px;
+      width: 80%;
+      max-width: 700px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .shirt-gallery img {
+      height: 150px;
+      background-color: #1d3524;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px;
+    }
+
+    .address {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 40px;
+      font-size: 20px;
+    }
+    .scroll-box {
+      overflow-x: auto;
+      display: flex;
+      gap: 20px;
+      padding-bottom: 10px;
+      margin-top: 20px;
+    }
+    .scroll-box::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .scroll-box::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .scroll-box::-webkit-scrollbar-thumb {
+      background: linear-gradient(300deg, #8301c9, #02ab51, #9b9696);
+      border-radius: 10px;
+    }
+
+    .pay-btn {
+      margin: 40px auto 80px;
+      padding: 12px 30px;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .pay-btn:hover {
+      background-color: #02ab51;
+      color: white;
+    }
+    @media (max-width: 768px) {
+  .brand-name {
+    font-size: 0; /* Hides text */
+  }
+
+  .brand-name::before {
+    content: "";
+    display: inline-block;
+    background-image: url('images/nicee.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 40px;
+  }
+
+  .header h1 {
+    font-size: 28px; /* Smaller Invoice text */
+  }
+
+  .face-img {
+    height: 100px; /* Smaller monster image */
+    top: 0;
+  }
+  .scroll-box img {
+    
+    height: 100px !important;
+    padding: 5px !important;
+    margin: 5px !important;
+  }
+  .address {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 10px;
+    word-break: break-word;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="brand-name-container">
+      <a href="Animora.html" class="brand-link">
+        <span class="brand-name">Animora</span>
+      </a>
+    </div> <h1>Invoice</h1>
+    <img src="images/monster.png" class="face-img" alt="Face Icon" />
+  </div>
+  
+
+  <div class="user-info" id="user-info"></div>
+  <div class="address" id="delivery-address"></div>
+  
+  <div class="shirt-gallery">
+    <div class="scroll-box" id="cart-scroll-box">
+    </div>
+  </div>
+
+  <div class="address">
+    <p>Delivery Charges : 200</p>
+    <p id="total-amount">Total : 0rs</p>
+  </div>
+
+  <button class="pay-btn" id="payBtn">Pay Now</button>
+
+  <script>
+    const cartScrollBox = document.getElementById("cart-scroll-box");
+    const totalAmount = document.getElementById("total-amount");
+    const userInfoBox = document.getElementById("user-info");
+    const addressBox = document.getElementById("delivery-address");
+    const payBtn = document.getElementById('payBtn');
+    const paymentType = localStorage.getItem("paymentType") || "N/A";
+    const addressData = JSON.parse(localStorage.getItem("addressInfo"));
+    if (addressData) {
+     
+userInfoBox.innerHTML = `
+  <p>Name : ${addressData.name}</p>
+  <p>Email : ${addressData.email}</p>
+  <p>Phone no. : ${addressData.phone}</p>
+  <p>Payment Type : ${paymentType}</p>
+`;
+      addressBox.innerHTML = `
+        <p>Address : ${addressData.area}, ${addressData.city}, ${addressData.province}</p>
+      `;
+    } else {
+      userInfoBox.innerHTML = `<p>Missing address information</p>`;
+      addressBox.innerHTML = `<p>Please return and fill in your delivery info.</p>`;
+    }
+
+    let cartItems = [];
+    try {
+      cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    } catch (e) {
+      console.error("Failed to parse cart data:", e);
+    }
+
+    function renderCartShirts() {
+      cartScrollBox.innerHTML = "";
+
+      if (cartItems.length === 0) {
+        const noShirtsMsg = document.createElement("div");
+        noShirtsMsg.textContent = "No shirts in cart";
+        noShirtsMsg.style.color = "white";
+        noShirtsMsg.style.fontSize = "18px";
+        noShirtsMsg.style.padding = "10px";
+        cartScrollBox.appendChild(noShirtsMsg);
+        totalAmount.textContent = "Total : ₹200";
+        return;
+      }
+
+      let totalShirtPrice = 0;
+
+      cartItems.forEach(item => {
+        const price = parseFloat(item.price);
+        if (!isNaN(price)) {
+          totalShirtPrice += price;
+        }
+
+        const img = document.createElement("img");
+        img.src = item.src || item.img || "";
+        img.alt = "Shirt";
+        img.style.height = "150px";
+        img.style.borderRadius = "10px";
+        img.style.backgroundColor = "#1d3524";
+        img.style.padding = "10px";
+        img.style.margin = "10px";
+        cartScrollBox.appendChild(img);
+      });
+
+      const deliveryFee = 200;
+      const finalTotal = totalShirtPrice + deliveryFee;
+      totalAmount.textContent = `Total : ₹${finalTotal}`;
+    }
+
+    renderCartShirts();
+
+    payBtn.addEventListener('click', () => {
+      document.body.classList.add('fade-out');
+
+      setTimeout(() => {
+        window.location.href = 'Orderconfirmed.html';
+      }, 500);
+    });
+  </script>
+</body>
+</html>

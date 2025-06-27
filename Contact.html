@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - Animora</title>
+  <link rel="icon" href="images/nicee.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <!-- Font Awesome for Social Icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background-image: url("images/text.png");
+      background-color: #333;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 20vh;
+      background: radial-gradient(ellipse at top left, #000 30%, #57007F 80%);
+      border-bottom-left-radius: 30% 30%;
+      border-bottom-right-radius: 27% 20%;
+      z-index: 0;
+    }
+
+    .logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-text {
+  font-family: "Great Vibes", cursive;
+  font-size: 2em;
+  color: #fff;
+  display: block;
+}
+
+.logo-image {
+  display: none;
+  width: 30px;
+  height: 30px;
+}
+
+.navbar {
+  position: relative;
+  width: 100%;
+  padding: 3% 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.nav-links {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+  z-index: 2;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1em;
+  position: relative;
+}
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.4em;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+}
+
+.nav-links a:hover {
+  color: #c800ff78;
+}
+
+.monster {
+  position: absolute;
+  top: -33px;
+  right: 40px;
+  z-index: 1;
+}
+
+.monster-image {
+  width: 100%;
+  max-width: 250px;
+  height: 250px;
+}
+
+/* ----- MOBILE RESPONSIVE STYLES ----- */
+@media (max-width: 900px) {
+  .logo-text {
+    display: none;
+  }
+
+  .logo-image {
+    display: inline;
+  }
+
+  .nav-links {
+    margin-right: 30px;
+  }
+
+  .nav-links a {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .nav-links a span {
+    display: none;
+  }
+
+  .nav-links a::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 26px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .nav-links a[href="Animora.html"]::before {
+    content: "\f015"; /* fa-house */
+  }
+
+  .nav-links a[href="Shop.html"]::before {
+    content: "\f54e"; /* fa-store */
+  }
+
+  .nav-links a[href="About.html"]::before {
+    content: "\f05a"; /* fa-circle-info */
+  }
+
+  .nav-links a[href="Contact.html"]::before {
+    content: "\f0e0"; /* fa-envelope */
+  }
+
+  .monster {
+    top: 0;
+    right: 0;
+    transform: translate(0, 0);
+  }
+
+  .monster-image {
+    width: 100px;
+    height: auto;
+  }
+
+  .nav-links a.active {
+    border-bottom: 2px solid white;
+    padding-bottom: 4px;
+  }
+}
+
+    .main-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .suguru-character {
+      position: absolute;
+      top:-100px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1s;
+    }
+
+    .suguru-character img {
+      width: 300px;
+      height: auto;
+      margin-bottom: 30px;
+      margin-top: 180px;
+    }
+
+    .contact-section {
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 15px;
+      padding: 3em;
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      gap: 3em;
+      align-items: flex-start;
+      margin-top: 285px;
+      position: relative;
+    }
+
+    .sword-decoration {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .sword-decoration img {
+      width: 200px;
+      height: auto;
+    }
+
+    .red-circle {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background: #FF0000;
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .contact-form {
+      flex: 1;
+      color: #fff;
+    }
+
+    .contact-form h2 {
+      font-size: 2.5em;
+      margin-bottom: 2em;
+      text-align: left;
+      color: #fff;
+    }
+
+    .form-group {
+      margin-bottom: 2em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.5em 0;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid white;
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1em;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    .form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-bottom-color: #fff;
+    }
+
+    .submit-btn {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 0.8em 2.5em;
+      border-radius: 25px;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 2em;
+      font-size: 0.9em;
+    }
+
+    .submit-btn:hover {
+      background: #ddd;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 900px) {
+    
+      .contact-section {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .suguru-character img {
+        width: 200px;
+      }
+
+      .sword-decoration {
+        margin-bottom: 2em;
+      }
+    }
+  
+    .status-popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #147600;
+  color: white;
+  padding: 0.8em 2em;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.status-popup.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* Style the textarea scrollbar */
+.contact-form textarea::-webkit-scrollbar {
+  width: 6px;
+}
+.contact-form textarea::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3); /* Figma-style thumb */
+  border-radius: 8px;
+}
+.contact-form textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+.contact-form textarea {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(255,255,255,0.3) transparent;
+}
+
+  </style>
+</head>
+<body>
+  <div class="status-popup" id="statusPopup">
+    Application submitted successfully
+  </div>
+  
+  <div class="header-background"></div>
+
+  <!-- NAVBAR -->
+ <!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo-container">
+    <a href="Animora.html" class="logo-text">Animora</a>
+    <a href="Animora.html"><img src="images/nicee.png" alt="Animora Logo" class="logo-image"></a>
+  </div>
+  <div class="nav-links">
+    <a href="Animora.html"><span>Home</span></a>
+    <a href="Shop.html"><span>Shop</span></a>
+    <a href="About.html"><span>About</span></a>
+    <a href="Contact.html" class="active"><span>Contact</span></a>
+  </div>
+  <div class="monster">
+    <img src="images/monster.png" alt="Monster" class="monster-image" />
+  </div>
+</nav>
+
+  
+
+  <!-- SUGURU CHARACTER -->
+  <div class="suguru-character">
+    <img src="images/suguru.png" alt="Suguru" />
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <div class="main-container">
+    <div class="contact-section">
+      <div class="sword-decoration">
+        <div class="red-circle"></div>
+        <img src="images/sword.png" alt="Sword" />
+      </div>
+
+      <div class="contact-form">
+        <h2>Contact Us</h2>
+        <form>
+          <div class="form-group">
+            <input type="text" placeholder="Full Name" required />
+          </div>
+          <div class="form-group">
+            <input type="email" placeholder="Email" required />
+          </div>
+          <div class="form-group">
+            <textarea placeholder="Message" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Contact Us</button>
+        </form>
+      </div>
+    </div>
+  </div>
+<script>const form = document.querySelector('.contact-form form');
+  const statusPopup = document.getElementById('statusPopup');
+  
+  let hideTimeout;
+  
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Show the popup
+    statusPopup.classList.add('show');
+  
+    // clear any existing hide timeouts
+    clearTimeout(hideTimeout);
+  
+    // hide after 3s
+    hideTimeout = setTimeout(() => {
+      statusPopup.classList.remove('show');
+    }, 1500);
+  
+    form.reset();
+  });
+  
+  // hide popup on click
+  statusPopup.addEventListener('click', () => {
+    clearTimeout(hideTimeout);
+    statusPopup.classList.remove('show');
+  });
+  </script>
+</body>
+</html>

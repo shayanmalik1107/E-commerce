@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop - Animora</title>
+    <link rel="icon" href="images/nicee.png" type="image/png">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Orbitron:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Orbitron", sans-serif;
+        background: #333 url("images/text.png") center/cover no-repeat;
+        color: white;
+        min-height: 100vh;
+      }
+
+      .header-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 20vh;
+        background: radial-gradient(ellipse at top left, #000 30%, #57007f 80%);
+        border-bottom-left-radius: 30% 30%;
+        border-bottom-right-radius: 30% 30%;
+        z-index: 0;
+      }
+
+      .navbar {
+        position: relative;
+        width: 100%;
+        padding: 3% 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 2;
+      }
+
+      .navbar .logo {
+        font-family: "Great Vibes", cursive;
+        font-size: 2em;
+        color: #fff;
+        flex: 1;
+        z-index: 2;
+      }
+
+      .navbar .nav-links {
+        flex: 2;
+        display: flex;
+        justify-content: center;
+        gap: 5%;
+        z-index: 2;
+      }
+
+      .navbar .nav-links a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1em;
+        position: relative;
+      }
+
+      .navbar .nav-links a.active::after {
+        content: "";
+        position: absolute;
+        bottom: -0.4em;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #fff;
+      }
+
+      .navbar .nav-links a.active:hover::after {
+        background: #c800ff78;
+      }
+
+      .nav-links a:hover {
+        color: #c800ff78;
+      }
+
+      .monster {
+        position: absolute;
+        top: -33px;
+        right: 40px;
+        z-index: 1;
+      }
+
+      .monster-image {
+        width: 100%;
+        max-width: 250px;
+        height: 250px;
+      }
+
+      .shop-section {
+        padding: 20px 25px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 900px) {
+        .shop-section {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 600px) {
+  .shop-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .nav-links a.active {
+    border-bottom: 2px solid white;
+    padding-bottom: 4px; /* slight spacing from icon */
+  }
+}
+      .product-card {
+        background-color: rgba(255, 255, 255, 0.08);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .product-card:hover {
+        transform: scale(1.05);
+      }
+
+      .product-card img {
+        width: 100%;
+        max-height: 200px;
+        object-fit: contain;
+        background-color: #222;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+
+      .product-title {
+        font-size: 0.9em;
+        margin: 8px 0;
+      }
+
+      .price {
+        color: #fff;
+        font-weight: bold;
+      }
+
+      .stars {
+        margin-top: 4px;
+        color: gold;
+      }
+
+      .cart-btn {
+        display: block;
+        margin: 125px auto 20px;
+        padding: 10px 25px;
+        background-color: #077533;
+        color: white;
+        border: none;
+        font-weight: bold;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+      .cart-btn:hover{
+        background-color:#015021 ;
+      }
+      .logo-image {
+  display: none;
+  height: 40px;
+}
+.logo-text {
+  font-family: "Great Vibes", cursive;
+  font-size: 2em;
+  color: #fff;
+  display: block;
+}
+@media (max-width: 600px) {
+  .logo-text {
+    display: none;
+  }
+
+  .logo-image {
+    display: inline;
+    width: 30px;
+    height: 30px;
+  }
+}
+@media (max-width: 600px) {
+  .nav-links {
+    margin-right: 30px; /* Add horizontal spacing */
+  }
+}
+@media (max-width: 600px) {
+  .nav-links a {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Fully hide text spans on mobile */
+  .nav-links a span {
+    display: none;
+  }
+
+  .nav-links a::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 26px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .nav-links a[href="Animora.html"]::before {
+    content: "\f015"; /* fa-house */
+  }
+
+  .nav-links a[href="Shop.html"]::before {
+    content: "\f54e"; /* fa-store */
+}
+
+
+  .nav-links a[href="About.html"]::before {
+    content: "\f05a"; /* fa-circle-info */
+  }
+
+  .nav-links a[href="Contact.html"]::before {
+    content: "\f0e0"; /* fa-envelope */
+  }
+  .monster {
+  top: 0; /* Move slightly up */
+  right: 0; /* Fully to the right */
+  transform: translate(0, 0);
+}
+
+.monster-image {
+  width: 100px; /* Decrease size */
+  height: auto; /* Keep aspect ratio */
+}
+
+}
+
+    </style>
+  </head>
+
+  <body>
+    <div class="header-background"></div>
+
+    <nav class="navbar">
+      <div class="logo-container">
+        <a href="Animora.html" class="logo-text">Animora</a>
+        <a href="Animora.html"><img src="images/nicee.png" alt="Animora Logo" class="logo-image"></a>
+      </div>      <div class="nav-links">
+        <a href="Animora.html"><span>Home</span></a>
+        <a href="Shop.html" class="active"><span>Shop</span></a>
+        <a href="About.html"><span>About</span></a>
+        <a href="Contact.html"><span>Contact</span></a>
+      </div>
+      <div class="monster">
+        <img src="images/monster.png" alt="Monster" class="monster-image" />
+      </div>
+    </nav>
+
+    <button class="cart-btn" onclick="window.location.href='Cart.html'">GO TO CART 🛒</button>
+
+    <section class="shop-section">
+      <div class="product-card">
+        <img src="images/shirt.png"  class="add-to-cart"   alt="Shirt" />
+        <div class="product-title">Regular Fit Long Sleeve Top</div>
+        <div class="price">Rs-1250</div>
+        <div class="stars">⭐ 4.2</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png"  class="add-to-cart"   alt="Shirt" />
+        <div class="product-title">Regular Fit Top</div>
+        <div class="price">Rs-2875</div>
+        <div class="stars">⭐ 4.3</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png"   class="add-to-cart"   alt="Shirt" />
+        <div class="product-title">Classic Shirt</div>
+        <div class="price">Rs-2163</div>
+        <div class="stars">⭐ 4.4</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png"  class="add-to-cart"   alt="Shirt" />
+        <div class="product-title">Winter Shirt</div>
+        <div class="price">Rs-1529</div>
+        <div class="stars">⭐ 4.1</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png"  class="add-to-cart"  alt="Shirt" />
+        <div class="product-title">Slim Fit Tee</div>
+        <div class="price">Rs-2992</div>
+        <div class="stars">⭐ 4.6</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png"  class="add-to-cart"    alt="Shirt" />
+        <div class="product-title">Streetwear Top</div>
+        <div class="price">Rs-2344</div>
+        <div class="stars">⭐ 4.0</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png"  class="add-to-cart"  alt="Shirt" />
+        <div class="product-title">Comfy Cotton</div>
+        <div class="price">Rs-1045</div>
+        <div class="stars">⭐ 4.7</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png"  class="add-to-cart"    alt="Shirt" />
+        <div class="product-title">Bold Print Tee</div>
+        <div class="price">Rs-1888</div>
+        <div class="stars">⭐ 4.5</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png"  class="add-to-cart"    alt="Shirt" />
+        <div class="product-title">Everyday Shirt</div>
+        <div class="price">Rs-1504</div>
+        <div class="stars">⭐ 4.3</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png"  class="add-to-cart"   alt="Shirt" />
+        <div class="product-title">Formal Wear</div>
+        <div class="price">Rs-2700</div>
+        <div class="stars">⭐ 4.6</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png"  class="add-to-cart"    alt="Shirt" />
+        <div class="product-title">Black Tee</div>
+        <div class="price">Rs-1399</div>
+        <div class="stars">⭐ 4.2</div>
+      </div>
+
+    </section>
+
+    <div id="popup" style="
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #4caf50;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-weight: bold;
+      font-size: 1rem;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 9999;
+      cursor: pointer;
+    ">
+      ✅ Item added to cart!
+    </div>
+
+    <script>
+      const images = document.querySelectorAll(".add-to-cart");
+      const popup = document.getElementById("popup");
+    
+      images.forEach(img => {
+        img.addEventListener("click", () => {
+          const productCard = img.closest(".product-card");
+          const src = img.getAttribute("src");
+          const title = productCard.querySelector(".product-title").innerText;
+          const priceText = productCard.querySelector(".price").innerText;
+    
+          const price = priceText.replace(/[^\d.]/g, "");
+    
+          const item = { src, title, price };
+    
+          let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+          cartItems.push(item);
+          localStorage.setItem("cart", JSON.stringify(cartItems));
+    
+          popup.style.display = "block";
+          setTimeout(() => {
+            popup.style.opacity = "1";
+          }, 10);
+    
+          const timer = setTimeout(() => {
+            popup.style.opacity = "0";
+            setTimeout(() => {
+              popup.style.display = "none";
+            }, 500);
+          }, 3000);
+    
+          popup.onclick = () => {
+            clearTimeout(timer);
+            popup.style.opacity = "0";
+            setTimeout(() => {
+              popup.style.display = "none";
+            }, 500);
+          };
+        });
+      });
+    </script>
+    
+  </body>
+</html>

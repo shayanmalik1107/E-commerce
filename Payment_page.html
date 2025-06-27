@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animora Payment</title>
+    <link rel="icon" href="images/nicee.png" type="image/png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap" rel="stylesheet" />
+
+    <style>
+      body {
+        background-image: url("images/text.png");
+        background-color: #333;
+        background-size: cover;
+        background-position: center;
+        margin: 0;
+        font-family: "Georgia", serif;
+        color: white;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      .container {
+        position: relative;
+        z-index: 1;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 40px;
+        background-color: #1a1a1a;
+      }
+
+      .logo {
+        font-family: "Brush Script MT", cursive;
+        font-size: 36px; /* Increased font size */
+        color: white;
+      }
+
+      .face-icon {
+        margin-top: 30px;
+        height: 90px;
+        width: auto;
+        transform: scale(1.5); /* Scales the image visually */
+        transform-origin: center;
+      }
+
+      .card {
+        margin: 100px auto 20px;
+        display: flex;
+        justify-content: center;
+        background-color: #111;
+        border-radius: 8px;
+        width: 80%;
+        max-width: 900px;
+        padding: 40px;
+        z-index: 2;
+        position: relative;
+      }
+
+      .shirt-preview {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        padding: 20px;
+      }
+
+      .shirt-preview img {
+        max-width: 100%;
+        max-height: 350px;
+      }
+
+      .payment-section {
+        flex: 2;
+        margin-left: 40px;
+      }
+
+      .payment-section h2 {
+        font-size: 26px;
+        margin-bottom: 20px;
+        font-family: 'Instrument Serif', serif;
+      }
+
+      .payment-icons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .payment-icons img {
+        height: 35px;
+        width: 55px;
+        object-fit: contain;
+        background-color: white;
+        padding: 2px;
+        border-radius: 4px;
+      }
+
+      .input-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .input-group input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  color: white;
+  padding: 5px 10px;
+  width: 40%;
+  outline: none;
+  box-shadow: none;
+  transition: border-bottom 0.3s ease;
+}
+
+.input-group input:focus {
+  border-bottom: 2px solid white;
+}
+
+
+      .input-group span {
+        font-style: italic;
+        opacity: 0.6;
+      }
+
+      .cash-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 0;
+      }
+
+      .switch {
+        width: 50px;
+        height: 25px;
+        background: #444;
+        border-radius: 20px;
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .switch::before {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: #999;
+        border-radius: 50%;
+        top: 2.5px;
+        left: 2.5px;
+        transition: 0.3s;
+      }
+
+      input[type="checkbox"]:checked + .switch::before {
+        transform: translateX(25px);
+        background: #00ff00;
+      }
+/* Hide number input arrows in most modern browsers */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+      .confirm-btn {
+        display: block;
+        margin: 30px auto 80px;
+        padding: 12px 30px;
+        border: none;
+        background: white;
+        color: black;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 16px;
+      }
+      input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.confirm-btn:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .payment-section {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .payment-section h2 {
+    font-size: 22px;
+  }
+
+  .payment-icons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .payment-icons img {
+    height: 30px;
+    width: 45px;
+  }
+
+  .input-group {
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .input-group input {
+    width: 80%;
+  }
+
+  .cash-toggle {
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .confirm-btn {
+    margin-top: 30px;
+    font-size: 14px;
+    padding: 10px 24px;
+  }
+
+  .shirt-preview img {
+    max-height: 200px;
+  }
+
+  .face-icon {
+    height: 60px;
+    margin-top: 10px;
+    transform: scale(1.2);
+  }
+
+  .logo {
+    font-size: 28px;
+  }
+  .input-group span {
+    position: relative;
+    top: 6px;
+  }
+}
+
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <h1 class="logo"><a href="Animora.html" style="color: aliceblue;">Animora</a></h1>
+        <img src="images/monster.png" alt="Face Icon" class="face-icon" />
+      </header>
+
+      <main class="card">
+        <div class="shirt-preview">
+          <img src="images/shirt2.png" alt="Shirt" />
+        </div>
+
+        <div class="payment-section">
+          <h2>Payment Methods</h2>
+          <div class="payment-icons">
+            <img src="images/mastercard.png" alt="Mastercard" />
+            <img src="images/unionpay.png" alt="UnionPay" />
+            <img src="images/paypal.png" alt="PayPal" />
+            <img src="images/jazzcash.png" alt="JazzCash" />
+            <img src="images/easypaisa.png" alt="Easypaisa" />
+          </div>
+
+          <div class="input-group">
+            <input type="text" placeholder="Account No." id="account" />
+            <span>Or</span>
+            <input type="text" placeholder="IBAN" id="iban" />
+          </div>
+
+          <div class="cash-toggle">
+            <label for="cod">Cash On Delivery</label>
+            <input type="checkbox" id="cod" style="display: none" />
+            <label class="switch" for="cod"></label>
+          </div>
+        </div>
+      </main>
+
+      <button class="confirm-btn" disabled onclick="window.location.href='Invoice.html'">Confirm Order</button>
+    </div>
+    <script>
+     const accountInput = document.getElementById("account");
+const ibanInput = document.getElementById("iban");
+const codCheckbox = document.getElementById("cod");
+const confirmBtn = document.querySelector(".confirm-btn");
+
+function handleAccountInput(input, maxLength) {
+  input.value = input.value.replace(/\D/g, "").slice(0, maxLength);
+}
+
+function handleIbanInput(input, maxLength) {
+  input.value = input.value.replace(/[^a-zA-Z0-9]/g, "").slice(0, maxLength);
+}
+
+accountInput.addEventListener("input", () => {
+  handleAccountInput(accountInput, 16);
+  if (accountInput.value.trim() !== "") {
+    ibanInput.disabled = true;
+  } else {
+    ibanInput.disabled = codCheckbox.checked ? true : false;
+  }
+  validateForm();
+});
+
+ibanInput.addEventListener("input", () => {
+  handleIbanInput(ibanInput, 24);
+  if (ibanInput.value.trim() !== "") {
+    accountInput.disabled = true;
+  } else {
+    accountInput.disabled = codCheckbox.checked ? true : false;
+  }
+  validateForm();
+});
+
+codCheckbox.addEventListener("change", () => {
+  const isChecked = codCheckbox.checked;
+  if (isChecked) {
+    accountInput.disabled = true;
+    ibanInput.disabled = true;
+  } else {
+    if (!ibanInput.value.trim()) accountInput.disabled = false;
+    if (!accountInput.value.trim()) ibanInput.disabled = false;
+  }
+  validateForm();
+});
+
+function validateForm() {
+  const accountValid = accountInput.value.trim().length === 16;
+  const ibanValid = ibanInput.value.trim().length === 24;
+  const codChecked = codCheckbox.checked;
+
+  const isValid = accountValid || ibanValid || codChecked;
+
+  let paymentType = "Unknown";
+  if (codChecked) {
+    paymentType = "Cash on Delivery";
+  } else if (accountValid) {
+    paymentType = "Online Payment ";
+  } else if (ibanValid) {
+    paymentType = "Online Payment";
+  }
+  localStorage.setItem("paymentType", paymentType);
+
+  confirmBtn.disabled = !isValid;
+  confirmBtn.style.pointerEvents = isValid ? "auto" : "none";
+  confirmBtn.style.opacity = isValid ? "1" : "0.5";
+  confirmBtn.style.cursor = isValid ? "pointer" : "not-allowed";
+}
+
+
+validateForm();
+function resetForm() {
+  accountInput.value = "";
+  ibanInput.value = "";
+  codCheckbox.checked = false;
+
+  accountInput.disabled = false;
+  ibanInput.disabled = false;
+
+  validateForm();
+}
+
+window.addEventListener("load", resetForm);
+
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) {
+    resetForm();
+  }
+});
+    </script>  
+  </body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Cart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/nicee.png" type="image/png">
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Georgia", serif;
+      }
+      body, html {
+        width: 100%;
+        height: 100%;
+        background-color: #222;
+      }
+      .background {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+      .background-text {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.2;
+        z-index: 0;
+      }
+      .nav-bar {
+  background-color: black;
+  height: 120px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.brand-name {
+  color: #ffffff;
+  font-size: 90px;
+  font-family: "Great Vibes", cursive;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.header {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.header h1 {
+  color: white;
+  font-size: 90px;
+  font-family: "Instrument Serif", serif;
+  text-align: center;
+}
+
+      .monster {
+        position: absolute;
+        top: -10px;
+        right: 5px;
+        height: 200px;
+        z-index: 3;
+      }
+      .cart-counter {
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        position: relative;
+        border: 0px solid white;
+        padding: 20px;
+        display: inline-block;
+        border-radius: 8px;
+        background-color: #646D67;
+        width: fit-content;
+        margin: 30px 0px 20px 60px;
+      }
+      .cart-container {
+        background-color: #111;
+        margin: 30px auto;
+        padding: 60px;
+        width: 95%;
+        max-width: 1400px;
+        overflow-x: auto;
+        white-space: nowrap;
+        border-radius: 10px;
+        z-index: 2;
+        position: relative;
+        height: 490px;
+      }
+      .scroll-box {
+        width: 100%;
+        overflow-x: auto;
+        display: flex;
+        gap: 20px;
+        padding-bottom: 10px;
+      }
+      .remove-btn {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #ff4444;
+        color: white;
+        border: none;
+        border-radius: 900px;
+        padding: 10px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        margin-top: 0;
+      }
+      .remove-btn:hover {
+        background-color: #cc0000;
+      }
+      .shirt-card {
+        position: relative;
+        background-color: #224030;
+        padding: 50px;
+        border-radius: 20px;
+        flex: 0 0 auto;
+        cursor: pointer;
+        transition: transform 0.2s ease, outline 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 330px;
+        margin-bottom: 20px;
+      }
+      .shirt-card.selected {
+        outline: 4px solid #00ff84;
+        transform: scale(1.05);
+      }
+      .shirt-card img {
+        height: 200px;
+        object-fit: contain;
+      }
+      .actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 60px;
+        position: relative;
+        z-index: 2;
+      }
+      .select-more {
+        background-color: #007f3b;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .select-more:hover{
+        background-color: #01622d;
+
+      }
+      .add-address {
+        background-color: transparent;
+        color: white;
+        border: 1px solid white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .add-address:hover {
+        background-color: #ffffff;
+        color: #000000;
+        transform: scale(1.05);
+        transition: all 0.1s ease;
+      }
+      .scroll-box::-webkit-scrollbar {
+        height: 8px;
+      }
+      .scroll-box::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .scroll-box::-webkit-scrollbar-thumb {
+        background: linear-gradient(300deg, #8301c9, #02ab51, #9b9696);
+        border-radius: 10px;
+      }.add-address.disabled {
+  opacity: 0.5;       /* makes it look lighter */
+  cursor: not-allowed; /* changes cursor to show disabled */
+  pointer-events: none; /* disables clicking */
+}
+
+.brand-logo-mobile {
+  display: none;
+  height: 50px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .brand-name {
+    display: none;
+  }
+
+  .brand-logo-mobile {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+
+  .header h1 {
+    font-size: 40px; /* Smaller Cart text */
+  }
+
+  .monster {
+    height: 150px; /* Smaller monster */
+    top: 0px;
+    right: 0px;
+  }
+  .shirt-card {
+    padding: 25px;
+    height: 290px;
+  }
+
+  .shirt-card img {
+    height:180px;
+  }
+  .remove-btn {
+    padding: 8px;
+    font-size: 16px;
+  }
+  .select-more,
+.add-address {
+  padding: 9px 12px;
+  font-size: 10px;
+}.actions {
+ 
+  align-items: stretch;
+  gap: 40px;
+}
+
+
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <img src="images/text.png" class="background-text" alt="Background Text" />
+      <div class="nav-bar">
+        <span>
+          <a href="Animora.html">
+            <img src="images/nicee.png" class="brand-logo-mobile" alt="Animora Logo" />
+            <span class="brand-name">Animora</span>
+          </a>
+        </span>
+              
+        <div class="header">
+          <h1>Cart</h1>
+        </div>
+      
+        <img src="images/monster.png" class="monster" alt="Monster" />
+      </div>
+      
+
+      <div class="cart-counter" id="cart-counter" style="display: none;">Shirts in Cart: 0</div>
+
+      <div class="cart-container">
+        <div class="scroll-box" id="scroll-box"></div>
+      </div>
+     <div class="actions">
+        <button class="select-more" onclick="window.location.href='Shop.html'">SELECT MORE</button>
+        <button class="add-address" id="add-address-btn">Add Address ➞</button>
+      </div>
+      <div id="popup" style="
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #6e0000;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-weight: bold;
+      font-size: 1rem;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 9999;
+      cursor: pointer;
+    ">
+  ❌Your order cart is empty! Please add at least one item to proceed.
+    </div>
+      <script>
+        const scrollBox = document.getElementById("scroll-box");
+        const counterBox = document.getElementById("cart-counter");
+      
+
+        let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+      
+        function renderCart() {
+          scrollBox.innerHTML = "";
+      
+          if (cartItems.length === 0) {
+            counterBox.style.display = "none";
+  
+
+            const noShirtsMsg = document.createElement("div");
+            noShirtsMsg.textContent = "No shirts selected";
+
+            noShirtsMsg.style.color = "white";
+            noShirtsMsg.style.fontSize = "24px";
+            noShirtsMsg.style.textAlign = "center";
+            noShirtsMsg.style.width = "100%";
+            noShirtsMsg.style.paddingTop = "140px";
+            scrollBox.appendChild(noShirtsMsg);
+            
+            return;
+          }
+        
+  
+          counterBox.style.display = "block";
+          let total = cartItems.reduce((sum, item) => sum + parseFloat(item.price), 0);
+          counterBox.textContent =` Shirts in Cart: ${cartItems.length}` ;
+      
+          cartItems.forEach((item, index) => {
+            const card = document.createElement("div");
+            card.classList.add("shirt-card");
+      
+            const img = document.createElement("img");
+            img.src = item.src; 
+            img.alt = item.title || "Shirt";
+      
+            const price = document.createElement("div");
+            price.textContent =` Price: Rs-${item.price}`;
+            price.style.color = "white";
+            price.style.marginTop = "10px";
+            price.style.fontWeight = "bold";
+            price.style.textAlign = "center";
+      
+            const removeBtn = document.createElement("button");
+            removeBtn.textContent = "✖";
+            removeBtn.classList.add("remove-btn");
+            removeBtn.onclick = () => {
+              cartItems.splice(index, 1);
+              localStorage.setItem("cart", JSON.stringify(cartItems));
+              renderCart();
+            };
+      
+            card.appendChild(img);
+card.appendChild(price);
+
+// Wrap remove button in a container for spacing
+const removeContainer = document.createElement("div");
+removeContainer.style.display = "flex";
+removeContainer.style.justifyContent = "center";
+removeContainer.style.marginTop = "10px";
+removeContainer.appendChild(removeBtn);
+
+card.appendChild(removeContainer);
+            scrollBox.appendChild(card);
+          });
+        }
+      
+        renderCart();
+        const addAddressBtn = document.getElementById("add-address-btn");
+
+        const popup = document.getElementById("popup");
+
+addAddressBtn.addEventListener("click", () => {
+  if (cartItems.length > 0) {
+    window.location.href = "Address.html";
+  } else {
+    popup.style.display = "block";
+    setTimeout(() => {
+      popup.style.opacity = 1;
+    }, 10);
+
+    setTimeout(() => {
+      hidePopup();
+    }, 3000);
+  }
+});
+
+function hidePopup() {
+  popup.style.opacity = 0;
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 500);
+}
+
+popup.addEventListener("click", hidePopup);
+
+      </script>
+      
+
+ 
+    </div>
+  </body>
+</html>

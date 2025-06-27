@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delivery Address</title>
+  <link rel="icon" href="images/nicee.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background-image: url("images/text.png");
+      background-color: #333;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+
+    }
+
+    /* ---- CURVED PURPLE BACKGROUND ---- */
+    .header-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 20vh;
+      background: radial-gradient(ellipse at top left, #000 30%, #57007F 80%);
+      border-bottom-left-radius: 30% 30%;
+      border-bottom-right-radius: 30% 30%;
+      z-index: 0;
+    }
+
+    /* ---- NAVBAR (Monster positioned absolutely) ---- */
+    .navbar {
+      position: relative;
+      width: 100%;
+      height: 300px; /* Match the monster height */
+      padding: 3% 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+      overflow: visible;
+    }
+
+    .navbar .logo {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2em;
+      color: #fff;
+      flex: 1;
+      z-index: 2;
+    }
+
+    .navbar .nav-links {
+      flex: 2;
+      display: flex;
+      justify-content: center;
+      gap: 5%;
+      z-index: 2;
+    }
+
+    .navbar .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1em;
+      position: relative;
+    }
+
+    .navbar .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -0.4em;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #fff;
+    }
+
+    .navbar .monster {
+      position: absolute;
+      top: -33px;
+      right: 40px;
+      z-index: 1;
+    }
+
+    .monster-image {
+      width: 100%;
+      max-width: 250px;
+      height: 250px;
+    }
+
+    /* ---- FORM SECTION ---- */
+    .form-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5% 3%;
+      z-index: 2;
+    }
+
+    .form-container {
+      background-color: #0d0d0d;
+      padding: 5%;
+      border-radius: 0.5em;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 0 5% rgba(0, 0, 0, 0.7);
+    }
+
+    .form-container h2 {
+      font-size: 2em;
+      margin-bottom: 1.5em;
+      color: #fff;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1em;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-size: 0.9em;
+      margin-bottom: 0.3em;
+      color: #fff;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 0.8em;
+      border: none;
+      background-color: #d9c3c3;
+      border-radius: 0.3em;
+      font-size: 1em;
+      color: #000;
+    }
+
+    #province, #city, #area {
+      background-color: transparent;
+      border: none;
+      border-bottom: 2px solid white;
+      border-radius: 0;
+      color: white;
+      padding: 0.5em 0;
+      font-size: 1em;
+    }
+
+    #province option {
+      color: #000;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3%;
+      margin-top: 1.5em;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+      min-width: 30%;
+    }
+/* Toggle button */
+.toggle-sidebar-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 99;
+  padding: 0.5em 1em;
+  background: #57007F;
+  color: white;
+  border: none;
+  border-radius: 0.3em;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+/* Sidebar */
+#addressSidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh; /* Full height */
+  background-color: #111;
+  color: white;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.5);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  width: 400px; /* increase from 300px */
+
+}
+
+#addressSidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  padding: 1em;
+  background-color: #222;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #444;
+}
+
+.sidebar-header h3 {
+  font-size: 1.2em;
+}
+
+.sidebar-header .close-btn {
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.sidebar-content {
+  overflow-y: auto;
+  flex: 1;
+  padding: 1em;
+}
+
+
+.address-card {
+  flex: 0 0 auto;            /* Ensure cards don't shrink or grow */
+  background: #333;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-radius: 0.4em;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  position: relative;
+  padding: 1em 1em 1em 2.5em; /* leave space for indicator */
+  width: 100%; 
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  text-align: left;
+}
+.address-card .indicator {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #555; /* default (off) */
+  transition: background-color 0.3s ease;
+}
+
+.address-card.selected .indicator {
+  background-color: #00ff00; /* bright green when selected */
+}
+.address-card:hover {
+  background: #444;
+}
+
+    .submit-button {
+      margin-top: 2em;
+      text-align: right;
+    }
+
+    .submit-button button {
+      padding: 0.7em 1.5em;
+      background-color: transparent;
+      color: #fff;
+      border: 1px solid #fff;
+      border-radius: 0.3em;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background 0.3s;
+    }
+
+    .submit-button button:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    @media (max-width: 768px) {
+    
+      .form-row {
+        flex-direction: column;
+        
+      }
+
+      .submit-button {
+        text-align: center;
+      }
+     
+
+    }
+    .address-slider {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;        /* Enable vertical scroll */
+  max-height: 100%;        /* Prevent overflow */
+  gap: 1.2em;
+}
+.toggle-sidebar-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none; /* Ensure no visible border */
+  padding: 0;     /* Remove padding */
+  margin: 0;
+  cursor: pointer;
+  z-index: 100;
+}
+
+
+
+.sidebar-icon-img {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+  display: inline-block; /* Make sure transform works */
+}
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.address-slider::-webkit-scrollbar {
+  width: 8px;
+}
+
+.address-slider::-webkit-scrollbar-track {
+  background: #1a1a1a; /* dark track */
+  border-radius: 4px;
+}
+
+.address-slider::-webkit-scrollbar-thumb {
+  background-color: #57007F; /* vibrant purple */
+  border-radius: 4px;
+  border: 2px solid #1a1a1a; /* space between thumb and track */
+}
+
+.address-slider::-webkit-scrollbar-thumb:hover {
+  background-color: #7200a8;
+}
+.nav-links i {
+  margin-right: 0.5em;
+}
+
+/* Hide text on small screens */
+@media (max-width: 768px) {
+  .nav-links .link-text {
+    display: none;
+  }
+.monster {
+    display: none;
+  }
+  .nav-links a {
+    font-size: 1.3em; /* Bigger icons for mobile */
+    justify-content: center;
+  }
+}
+/* Hide icons on desktop */
+.icon-only {
+  display: none;
+}
+
+/* Show only text on desktop */
+.text-only {
+  display: inline;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .icon-only {
+    display: inline;
+    font-size: 1.4em;
+  }
+
+  .text-only {
+    display: none;
+  }
+
+  .nav-links a {
+    justify-content: center;
+    font-size: 1.4em;
+  }
+}
+.image-logo {
+  display: none;
+  height: 40px; /* Adjust size as needed */
+}
+
+@media (max-width: 768px) {
+  .text-logo {
+    display: none;
+  }
+
+  .image-logo {
+    display: inline;
+  }
+  #addressSidebar {
+    width: 70vw; /* 70% of viewport width */
+  }
+  .address-card {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+
+}
+  
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="header-background"></div>
+
+  <nav class="navbar">
+    <div>
+      <a href="Animora.html" class="logo">
+        <span class="text-logo">Animora</span>
+        <img src="images/nicee.png" alt="Nicee Logo" class="image-logo" />
+      </a>
+    </div>
+        <div class="nav-links">
+      <a href="Animora.html">
+        <i class="fas fa-home icon-only"></i>
+        <span class="text-only">Home</span>
+      </a>
+      <a href="Shop.html" >
+        <i class="fas fa-store icon-only"></i>
+        <span class="text-only">Shop</span>
+      </a>
+      <a href="About.html">
+        <i class="fas fa-info-circle icon-only"></i>
+        <span class="text-only">About</span>
+      </a>
+      <a href="Contact.html">
+        <i class="fas fa-envelope icon-only"></i>
+        <span class="text-only">Contact</span>
+      </a>
+    </div>
+    
+    
+    <div class="monster">
+      <img src="images/monster.png" alt="Monster" class="monster-image" />
+    </div>
+  </nav>
+
+  <div class="form-wrapper">
+    <div class="form-container">
+      <h2>Add Delivery Address</h2>
+      
+
+      <form id="addressForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" type="text" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone no.</label>
+          <input id="phone" type="text" inputmode="numeric" maxlength="15" required />
+
+        </div>
+      
+        <div class="form-row">
+          <div class="form-group">
+            <label for="province">Province</label>
+            <select id="province" required>
+              <option value="">Select</option>
+              <option>Punjab</option>
+              <option>Sindh</option>
+              <option>Khyber Pakhtunkhwa</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="city">City</label>
+            <input id="city" type="text" required />
+          </div>
+          <div class="form-group">
+            <label for="area">Area</label>
+            <input id="area" type="text" required />
+          </div>
+        </div>
+      
+        <div class="submit-button">
+          <button type="submit">Proceed to Payment</button>
+        </div>
+      </form>
+      
+      <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+      
+        // Firebase config
+        const firebaseConfig = {
+          apiKey: "AIzaSyBoq6J4z48v48p177NNDNfM10Z0pp2_Hh4",
+          authDomain: "animora-77260.firebaseapp.com",
+          projectId: "animora-77260",
+          storageBucket: "animora-77260.appspot.com",
+          messagingSenderId: "325483607948",
+          appId: "1:325483607948:web:c65b7846d7d4e946ba08a9",
+          measurementId: "G-8WS25C0WWT"
+        };
+      
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+      
+        let currentUserUID = null;
+        const signInPrompt = document.getElementById('signInPrompt');
+
+        onAuthStateChanged(auth, user => {
+  if (user) {
+    currentUserUID = user.uid;
+    signInPrompt.style.display = 'none'; // Hide Sign In button
+    loadSavedAddresses(user.uid);
+  } else {
+    currentUserUID = null;
+    signInPrompt.style.display = 'block'; // Show Sign In button
+  }
+});
+        import { get, child } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        document.getElementById('signInBtn').addEventListener('click', () => {
+          
+    window.location.href = 'signin.html';
+  });
+
+function loadSavedAddresses(uid) {
+  const addressSlider = document.getElementById('addressSlider');
+  const userAddressRef = ref(database, 'addresses/' + uid);
+
+  get(userAddressRef).then(snapshot => {
+    if (snapshot.exists()) {
+      const addresses = snapshot.val();
+      Object.entries(addresses).forEach(([key, address]) => {
+        const card = document.createElement('div');
+        card.className = 'address-card';
+        card.innerHTML = `
+  <div class="indicator"></div>
+  <strong>${address.name}</strong><br/>
+  ${address.email}<br/>
+  Phone no: ${address.phone}<br/>
+  ${address.province}, ${address.city}, ${address.area}
+`;
+
+
+        card.addEventListener('click', () => {
+  document.getElementById('name').value = address.name;
+  document.getElementById('email').value = address.email;
+  document.getElementById('phone').value = address.phone;
+  document.getElementById('province').value = address.province;
+  document.getElementById('city').value = address.city;
+  document.getElementById('area').value = address.area;
+
+  // Handle selection highlighting
+  const allCards = document.querySelectorAll('.address-card');
+  allCards.forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+});
+
+        addressSlider.appendChild(card);
+      });
+    }
+  }).catch(error => {
+    console.error("Error fetching saved addresses:", error);
+  });
+}
+        const form = document.getElementById('addressForm');
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+      
+          const name = document.getElementById('name').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const phone = document.getElementById('phone').value.trim();
+          const province = document.getElementById('province').value.trim();
+          const city = document.getElementById('city').value.trim();
+          const area = document.getElementById('area').value.trim();
+      
+          if (!/^\d+$/.test(phone)) {
+            alert('Please enter a valid phone number (digits only).');
+            return;
+          }
+      
+          if (name && email && phone && province && city && area) {
+  const addressInfo = { name, email, phone, province, city, area };
+
+  // Always save to localStorage
+  localStorage.setItem('addressInfo', JSON.stringify(addressInfo));
+
+  // Save to Firebase only if user is logged in
+  if (currentUserUID) {
+    const addressListRef = ref(database, 'addresses/' + currentUserUID);
+   
+get(addressListRef).then(snapshot => {
+  let isDuplicate = false;
+
+  if (snapshot.exists()) {
+    const existingAddresses = snapshot.val();
+    for (let key in existingAddresses) {
+      const existing = existingAddresses[key];
+      if (
+        existing.name === addressInfo.name &&
+        existing.email === addressInfo.email &&
+        existing.phone === addressInfo.phone &&
+        existing.province === addressInfo.province &&
+        existing.city === addressInfo.city &&
+        existing.area === addressInfo.area
+      ) {
+        isDuplicate = true;
+        break;
+      }
+    }
+  }
+
+  if (!isDuplicate) {
+    push(addressListRef, addressInfo)
+      .then(() => {
+        window.location.href = 'Payment_page.html';
+      })
+      .catch((error) => {
+        console.error("Error saving address to database:", error);
+        alert("Failed to save address. Please try again.");
+      });
+  } else {
+    // Already exists, proceed without saving again
+    console.log("Duplicate address detected. Skipping save.");
+    window.location.href = 'Payment_page.html';
+  }
+});
+  } else {
+    // Just proceed to payment page using localStorage
+    window.location.href = 'Payment_page.html';
+  }
+} else {
+  alert('Please fill out all fields before proceeding.');
+}
+        });
+        const sidebar = document.getElementById('addressSidebar');
+const toggleBtn = document.querySelector('.toggle-sidebar-btn');
+const closeBtn = sidebar.querySelector('.close-btn');
+const toggleIcon = toggleBtn.querySelector('.sidebar-icon-img');
+
+toggleBtn.addEventListener('click', () => {
+  const isOpen = sidebar.classList.toggle('open');
+  if (isOpen) {
+    toggleIcon.classList.add('rotate-180');
+  } else {
+    toggleIcon.classList.remove('rotate-180');
+  }
+});
+
+closeBtn.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  toggleIcon.classList.remove('rotate-180');
+});
+document.addEventListener('click', (event) => {
+  const isClickInsideSidebar = sidebar.contains(event.target);
+  const isClickOnToggle = toggleBtn.contains(event.target);
+
+  if (!isClickInsideSidebar && !isClickOnToggle && sidebar.classList.contains('open')) {
+    sidebar.classList.remove('open');
+    toggleIcon.classList.remove('rotate-180');
+  }
+});
+
+      </script>
+      
+      
+      
+    </div>
+    
+    
+  </div>
+  <button class="toggle-sidebar-btn" id="toggleSidebarBtn">
+    <img src="images/slide.png" alt="Saved Addresses" class="sidebar-icon-img" />
+  </button>
+  
+  <div id="addressSidebar">
+    <div class="sidebar-header">
+      <h3>Saved Addresses</h3>
+      <span class="close-btn">&times;</span>
+    </div>
+    <div class="sidebar-content">
+      <div class="address-slider" id="addressSlider"></div>
+      <div id="signInPrompt" style="display:none; margin-top: 1em; text-align:center;">
+        <button id="signInBtn" style="
+          padding: 0.7em 1.5em;
+          background-color: #57007F;
+          color: white;
+          border: none;
+          font-family: 'Orbitron', sans-serif;
+          border-radius: 0.3em;
+          cursor: pointer;
+          font-size: 1em;
+        ">Sign In</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
