@@ -229,7 +229,7 @@ userInfoBox.innerHTML = `
         noShirtsMsg.style.fontSize = "18px";
         noShirtsMsg.style.padding = "10px";
         cartScrollBox.appendChild(noShirtsMsg);
-        totalAmount.textContent = "Total : ₹200";
+        totalAmount.textContent = "Total : Rs-200";
         return;
       }
 
@@ -254,7 +254,7 @@ userInfoBox.innerHTML = `
 
       const deliveryFee = 200;
       const finalTotal = totalShirtPrice + deliveryFee;
-      totalAmount.textContent = `Total : ₹${finalTotal}`;
+      totalAmount.textContent = `Total : Rs~ ${finalTotal}`;
     }
 
     renderCartShirts();

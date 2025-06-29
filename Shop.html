@@ -378,6 +378,7 @@
     <script>
       const images = document.querySelectorAll(".add-to-cart");
       const popup = document.getElementById("popup");
+      const cartButton = document.querySelector(".cart-btn");
     
       images.forEach(img => {
         img.addEventListener("click", () => {
@@ -385,15 +386,47 @@
           const src = img.getAttribute("src");
           const title = productCard.querySelector(".product-title").innerText;
           const priceText = productCard.querySelector(".price").innerText;
-    
           const price = priceText.replace(/[^\d.]/g, "");
-    
           const item = { src, title, price };
     
+          // Save to cart
           let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
           cartItems.push(item);
           localStorage.setItem("cart", JSON.stringify(cartItems));
     
+          // --- Animation ---
+          const clone = img.cloneNode(true);
+          document.body.appendChild(clone);
+    
+          const imgRect = img.getBoundingClientRect();
+          const cartRect = cartButton.getBoundingClientRect();
+    
+          // Initial clone style (slightly to the left of the original)
+          clone.style.position = "fixed";
+          clone.style.left = imgRect.left - 60 + "px";
+          clone.style.top = imgRect.top + "px";
+          clone.style.width = imgRect.width + "px";
+          clone.style.height = imgRect.height + "px";
+          clone.style.transition = "all 0.8s ease-in-out";
+          clone.style.zIndex = 10000;
+          clone.style.opacity = "1";
+          clone.style.pointerEvents = "none";
+    
+          // Trigger animation to cart
+          requestAnimationFrame(() => {
+            clone.style.left = cartRect.left + cartRect.width / 2 - 20 + "px";
+            clone.style.top = cartRect.top + cartRect.height / 2 - 20 + "px";
+            clone.style.width = "30px";
+            clone.style.height = "30px";
+            clone.style.opacity = "0";
+          });
+    
+          // Remove the clone after animation
+          setTimeout(() => {
+            clone.remove();
+          }, 900);
+    
+          // Show popup
           popup.style.display = "block";
           setTimeout(() => {
             popup.style.opacity = "1";
