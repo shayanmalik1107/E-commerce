@@ -17,155 +17,135 @@
       crossorigin="anonymous"
     ></script>
     <style>
-     .no-js #animoraModal {
+   .no-js #animoraModal {
     display: none !important;
   }
- /* Fullscreen modal with blur effect */
-.animora-modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  opacity: 1;
-}
 
-@keyframes fadeInModal {
-  to { opacity: 1; }
-}
+  .animora-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+  }
 
-/* Container around logo and letters */
-.logo-wrapper {
-  position: relative;
-  width: 100px;
-  height: 100px;
-}
+  .animora-modal.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-/* Logo image base style */
-.logo-img {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  opacity: 0;
-  transform: rotate(0deg);
-}
-.logo-fade-in {
-  animation: fadeInOnly 3s ease forwards;
-}
+  .animora-modal.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
 
-@keyframes fadeInOnly {
-  to { opacity: 1; }
-}
-/* Animate fade in + infinite spin */
-.start-logo {
-  animation: fadeAndRotate 1s ease forwards;
-}
+  /* Logo animation etc (unchanged) */
+  @keyframes fadeInOnly {
+    to { opacity: 1; }
+  }
 
-@keyframes fadeAndRotate {
-  to { opacity: 1; }
-}
+  .logo-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+  .logo-img {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    transform: rotate(0deg);
+  }
 
-/* Stop rotation (freeze in place) */
-.stop-logo {
-  animation: none !important;
-  opacity: 1;
-}
+  .logo-fade-in {
+    animation: fadeInOnly 3s ease forwards;
+  }
 
-/* Letter container aligned to image center */
-.letter-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+  .stop-logo {
+    animation: none !important;
+    opacity: 1;
+  }
 
-/* Each animated letter */
-.anim-letter {
-  position: absolute;
-  font-size: 2em;
-  font-weight: bold;
-  color: white;
-  opacity: 0;
-  transform: translate(0, 0) scale(0.5);
-  animation: floatOut 0.6s ease forwards;
-}
+  .letter-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-@keyframes floatOut {
-  0% {
+  .anim-letter {
+    position: absolute;
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
     opacity: 0;
     transform: translate(0, 0) scale(0.5);
+    animation: floatOut 0.6s ease forwards;
   }
-  100% {
+
+  @keyframes floatOut {
+    0% {
+      opacity: 0;
+      transform: translate(0, 0) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(var(--x), 100px) scale(1);
+    }
+  }
+
+  .text-intro {
+    font-size: 2.5em;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    animation: fadeInText 1s ease forwards;
+    margin-right: 20px;
+  }
+
+  .tagline {
+    font-size: 1.2em;
+    color: #ccc;
+    margin-top: 60px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeInText 3s ease forwards;
+    margin-left: 20px;
+  }
+
+  @keyframes fadeInText {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .skip-button {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 0.7em;
+    font-weight: 500;
+    cursor: pointer;
+    z-index: 10000;
+    padding: 5px 10px;
+    transition: opacity 0.2s ease;
+    opacity: 0.7;
+  }
+
+  .skip-button:hover {
     opacity: 1;
-    transform: translate(var(--x), 100px) scale(1); /* <- More space downward */
   }
-}
-
-/* Smooth 1-second modal fade out */
-.fadeOut {
-  animation: fadeOutModal 1s ease forwards;
-}
-
-@keyframes fadeOutModal {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-.text-intro {
-  font-size: 2.5em;
-  color: white;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-  animation: fadeInText 1s ease forwards;
-  margin-right: 20px; /* ✅ Push it a bit left */
-
-}
-
-.tagline {
-  font-size: 1.2em;
-  color: #ccc;
-  margin-top: 60px;
-  text-align: center;
-  opacity: 0;
-  animation: fadeInText 3s ease forwards;
-  margin-left: 20px; /* ✅ Push it a bit left */
-
-  
-}
-
-@keyframes fadeInText {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.skip-button {
-  position: absolute;
-  top: 20px;
-  right: 25px;
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 0.7em;
-  font-weight: 500;
-  cursor: pointer;
-  z-index: 10000;
-  padding: 5px 10px;
-  transition: opacity 0.2s ease;
-  opacity: 0.7;
-}
-
-.skip-button:hover {
-  opacity: 1;
-}
-
       * {
         box-sizing: border-box;
         margin: 0;
@@ -1523,89 +1503,85 @@ window.addEventListener('scroll', () => {
     updateDisplay();
   }, 1000); // every second
   window.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('animoraModal');
-  const logo = document.getElementById('animoraLogo');
-  const container = document.getElementById('animoraLetters');
-  const skipButton = document.getElementById('skipIntro');
+    const modal = document.getElementById('animoraModal');
+    const logo = document.getElementById('animoraLogo');
+    const container = document.getElementById('animoraLetters');
+    const skipButton = document.getElementById('skipIntro');
 
-  const chars = ['A', 'N', 'I', 'M', 'O', 'R', 'A'];
-  const spacing = [-280, -180, -90, -20, 80, 170, 270];
+    const chars = ['A', 'N', 'I', 'M', 'O', 'R', 'A'];
+    const spacing = [-280, -180, -90, -20, 80, 170, 270];
 
-  // ✅ Check sessionStorage
-  if (sessionStorage.getItem('modalShown')) {
-  return; // Don't show modal again
-}
+    // Prevent flash on reload
+    modal.classList.remove('hidden', 'fade-out', 'visible');
 
-  // ✅ Mark as shown in this session
-  sessionStorage.setItem('modalShown', 'true');
-
-  // ✅ Show modal
-  modal.style.opacity = '1';
-  modal.style.display = 'flex';
-  logo.classList.add('logo-fade-in');
-
-  // ✅ Spin control
-  let rotation = 0;
-  let spinning = true;
-  const spinSpeed = 6;
-
-  function animateSpin() {
-    if (!spinning) return;
-    rotation = (rotation + spinSpeed) % 360;
-    logo.style.transform = `rotate(${rotation}deg)`;
-    requestAnimationFrame(animateSpin);
-  }
-
-  animateSpin();
-
-  // ✅ Animate letters
-  const isMobile = window.innerWidth <= 600;
-  chars.forEach((char, i) => {
-    const span = document.createElement('span');
-    span.textContent = char;
-    span.className = 'anim-letter';
-    if (!isMobile) {
-      span.style.setProperty('--x', `${spacing[i]}px`);
+    // ✅ If already shown this session, skip animation
+    if (sessionStorage.getItem('modalShown')) {
+      modal.classList.add('fade-out');
+      return;
     }
-    span.style.animationDelay = `${1 + i * 0.3}s`;
-    container.appendChild(span);
-  });
 
-  const totalLetterTime = 1 + chars.length * 0.3 + 0.6;
+    // ✅ Mark modal as shown
+    sessionStorage.setItem('modalShown', 'true');
 
-  setTimeout(() => {
-    spinning = false;
-    const remaining = (360 - (rotation % 360)) % 360;
-    const finalRotation = rotation + remaining;
-    logo.style.transition = 'transform 0.4s ease-out';
-    logo.style.transform = `rotate(${finalRotation}deg)`;
+    // ✅ Start modal
+    modal.classList.add('visible');
+    logo.classList.add('logo-fade-in');
+
+    // ✅ Logo spin setup
+    let rotation = 0;
+    let spinning = true;
+    const spinSpeed = 6;
+
+    function animateSpin() {
+      if (!spinning) return;
+      rotation = (rotation + spinSpeed) % 360;
+      logo.style.transform = `rotate(${rotation}deg)`;
+      requestAnimationFrame(animateSpin);
+    }
+    animateSpin();
+
+    // ✅ Animate letters
+    const isMobile = window.innerWidth <= 600;
+    chars.forEach((char, i) => {
+      const span = document.createElement('span');
+      span.textContent = char;
+      span.className = 'anim-letter';
+      if (!isMobile) {
+        span.style.setProperty('--x', `${spacing[i]}px`);
+      }
+      span.style.animationDelay = `${1 + i * 0.3}s`;
+      container.appendChild(span);
+    });
+
+    const totalLetterTime = 1 + chars.length * 0.3 + 0.6;
 
     setTimeout(() => {
-      logo.classList.add('stop-logo');
-    }, 400);
-  }, totalLetterTime * 1000);
+      spinning = false;
+      const remaining = (360 - (rotation % 360)) % 360;
+      const finalRotation = rotation + remaining;
+      logo.style.transition = 'transform 0.4s ease-out';
+      logo.style.transform = `rotate(${finalRotation}deg)`;
 
-  // ✅ Auto fade out modal
-  setTimeout(() => {
-    modal.classList.add('fadeOut');
-  }, 5000);
+      setTimeout(() => {
+        logo.classList.add('stop-logo');
+      }, 400);
+    }, totalLetterTime * 1000);
 
-  setTimeout(() => {
-    modal.style.display = 'none';
-  }, 5700);
-
-  // ✅ Skip Button
-  skipButton.addEventListener('click', () => {
-    spinning = false;
-    modal.classList.add('fadeOut');
+    // ✅ Auto fade out modal after 5s
     setTimeout(() => {
-      modal.style.display = 'none';
-    }, 0); // matches fadeOut animation
-  });
-});
+      modal.classList.remove('visible');
+      modal.classList.add('fade-out');
+    }, 5000);
 
+    // ✅ Skip button
+    skipButton.addEventListener('click', () => {
+      spinning = false;
+      modal.classList.remove('visible');
+      modal.classList.add('fade-out');
+    });
+  });
 </script>
-<div id="animoraModal" class="animora-modal" hidden style="opacity: 0;">
+<div id="animoraModal" class="animora-modal hidden">
   <div class="text-intro">WELCOME TO</div>
 
   <div class="logo-wrapper">
@@ -1614,9 +1590,9 @@ window.addEventListener('scroll', () => {
   </div>
 
   <div class="tagline">Streetwear forged at the edge of the spirit realm.</div>
-
   <button id="skipIntro" class="skip-button">Skip</button>
 </div>
 
   </body>
 </html>
+
