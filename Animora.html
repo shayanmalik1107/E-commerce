@@ -1099,40 +1099,42 @@ height: 30%;
     <div class="header-background"></div>
 
     <!-- NAVBAR -->
-    <nav class="navbar">
+    <nav class="navbar" style="justify-content: space-between;">
       <div class="logo-container">
         <a href="Animora.html" class="logo-text">Animora</a>
         <a href="Animora.html"><img src="images/nicee.png" alt="Animora Logo" class="logo-image"></a>
       </div>
           
-      <div class="nav-links">
-        <a href="Animora.html" class="active">
-          <span class="nav-text">Home</span>
-          <i class="fas fa-home nav-icon"></i>
-        </a>
-        <a href="Shop.html">
-          <span class="nav-text">Shop</span>
-          <i class="fas fa-store nav-icon"></i>
-        </a>
-        <a href="About.html">
-          <span class="nav-text">About</span>
-          <i class="fas fa-info-circle nav-icon"></i>
-        </a>
-        <a href="Contact.html">
-          <span class="nav-text">Contact</span>
-          <i class="fas fa-envelope nav-icon"></i>
-        </a>
-      </div>
-    
-      <button class="signin-button" id="user-btn">Sign In</button>
+      <div class="right-menu" style="display: flex; align-items: center; gap: 20px;">
+        <div class="nav-links">
+          <a href="Animora.html" class="active">
+            <span class="nav-text">Home</span>
+            <i class="fas fa-home nav-icon"></i>
+          </a>
+          <a href="Shop.html">
+            <span class="nav-text">Shop</span>
+            <i class="fas fa-store nav-icon"></i>
+          </a>
+          <a href="About.html">
+            <span class="nav-text">About</span>
+            <i class="fas fa-info-circle nav-icon"></i>
+          </a>
+          <a href="Contact.html">
+            <span class="nav-text">Contact</span>
+            <i class="fas fa-envelope nav-icon"></i>
+          </a>
+        </div>
+      
+        <button class="signin-button" id="user-btn" style="margin-right: 0;">Sign In</button>
 
-      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open Menu">
-        <i class="fas fa-bars"></i>
-      </button>
-    
-      <button id="toggleSidebar" style="cursor: pointer; background: none; border: none;">
-        <img src="images/slide.png" alt="Menu" style="width: 30px; height: 30px;" id="sidebarIcon" />
-      </button>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      
+        <button id="toggleSidebar" style="cursor: pointer; background: none; border: none;">
+          <img src="images/slide.png" alt="Menu" style="width: 30px; height: 30px;" id="sidebarIcon" />
+        </button>
+      </div>
     </nav>
 
     <!-- Mobile Navigation Drawer -->
