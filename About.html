@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - Animora</title>
+  <link rel="icon" href="images/nicee.png" type="image/png">
+
+  <!-- Google Fonts & FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background-image: url("images/text.png");
+      background-color: #333;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: white;
+    }
+
+    /* ---- CURVED PURPLE BACKGROUND ---- */
+    .header-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 20vh;
+      background: radial-gradient(ellipse at top left, #000 30%, #57007F 80%);
+      border-bottom-left-radius: 30% 30%;
+      border-bottom-right-radius: 27% 20%;
+      z-index: 0;
+    }
+
+    /* ---- NAVBAR ---- */
+    .navbar {
+      position: relative;
+      width: 100%;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-text {
+      font-family: "Great Vibes", cursive;
+      font-size: 2.2em;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .logo-image {
+      display: none;
+      width: 35px;
+      height: 35px;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 35px;
+      z-index: 2;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1em;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -0.4em;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #fff;
+    }
+
+    .nav-links a:hover {
+      color: #c800ff;
+    }
+
+    .monster {
+      position: absolute;
+      top: -33px;
+      right: 40px;
+      z-index: 1;
+    }
+
+    .monster-image {
+      width: 100%;
+      max-width: 250px;
+      height: 250px;
+    }
+
+    /* ---- MOBILE MENU DRAWER STYLES ---- */
+    .mobile-menu-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.8em;
+      cursor: pointer;
+      z-index: 10;
+      padding: 5px 10px;
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-menu-drawer {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: #141414;
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+      transition: right 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      padding: 25px 20px;
+      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.8);
+    }
+
+    .mobile-menu-drawer.active {
+      right: 0;
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .drawer-logo {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2em;
+      color: #fff;
+    }
+
+    .drawer-close {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2em;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .drawer-close:hover {
+      color: #c800ff;
+    }
+
+    .drawer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .drawer-link {
+      color: #ddd;
+      text-decoration: none;
+      font-size: 1.1em;
+      padding: 12px 15px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .drawer-link:hover, .drawer-link.active {
+      background: rgba(200, 0, 255, 0.2);
+      color: #fff;
+      border-left: 4px solid #c800ff;
+    }
+
+    .drawer-btn {
+      margin-top: 20px;
+      background: linear-gradient(100deg, #bfabab, #9405bc);
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    /* ---- ABOUT SECTION RESPONSIVE FIX ---- */
+    .about-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1100px;
+      margin: 40px auto 60px;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .about-title {
+      font-size: 2.8em;
+      color: #fff;
+      margin-bottom: 30px;
+      border-bottom: 3px solid #c800ff;
+      display: inline-block;
+      padding-bottom: 5px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .about-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      background: rgba(0, 0, 0, 0.75);
+      border-radius: 20px;
+      padding: 40px 30px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .goku-image {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #9405bc;
+      box-shadow: 0 0 20px rgba(148, 5, 188, 0.4);
+    }
+
+    .about-card {
+      flex: 1;
+      text-align: center;
+      color: #fff;
+    }
+
+    .about-card p {
+      font-size: 1.15em;
+      line-height: 1.8em;
+      color: #eee;
+      margin-bottom: 15px;
+    }
+
+    .about-card .tagline {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.8em;
+      color: #df9bff;
+      margin-top: 15px;
+    }
+
+    .luffy-image {
+      width: 220px;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    /* ---- MEDIA QUERIES ---- */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none !important;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .logo-text {
+        display: none;
+      }
+
+      .logo-image {
+        display: inline;
+      }
+
+      .monster {
+        top: 0;
+        right: 50px;
+      }
+
+      .monster-image {
+        width: 80px;
+        height: auto;
+      }
+
+      .about-wrapper {
+        margin-top: 20px;
+      }
+
+      .about-title {
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+
+      .about-container {
+        flex-direction: column;
+        padding: 30px 20px;
+        gap: 20px;
+      }
+
+      .goku-image {
+        width: 130px;
+        height: 130px;
+      }
+
+      .luffy-image {
+        width: 160px;
+      }
+
+      .about-card p {
+        font-size: 1em;
+        line-height: 1.6em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Curved Header Background -->
+  <div class="header-background"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <a href="Animora.html" class="logo-text">Animora</a>
+      <a href="Animora.html"><img src="images/nicee.png" alt="Animora Logo" class="logo-image"></a>
+    </div>
+    
+    <div class="nav-links">
+      <a href="Animora.html"><span>Home</span></a>
+      <a href="Shop.html"><span>Shop</span></a>
+      <a href="About.html" class="active"><span>About</span></a>
+      <a href="Contact.html"><span>Contact</span></a>
+    </div>
+
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="monster">
+      <img src="images/monster.png" alt="Monster" class="monster-image" />
+    </div>
+  </nav>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+  <div class="mobile-menu-drawer" id="mobileMenuDrawer">
+    <div class="drawer-header">
+      <div class="drawer-logo">Animora</div>
+      <button class="drawer-close" id="drawerClose" aria-label="Close Menu">&times;</button>
+    </div>
+    <div class="drawer-links">
+      <a href="Animora.html" class="drawer-link"><i class="fas fa-home"></i> Home</a>
+      <a href="Shop.html" class="drawer-link"><i class="fas fa-store"></i> Shop</a>
+      <a href="About.html" class="drawer-link active"><i class="fas fa-info-circle"></i> About</a>
+      <a href="Contact.html" class="drawer-link"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="Cart.html" class="drawer-link"><i class="fas fa-shopping-cart"></i> Cart</a>
+      <a href="signin.html" class="drawer-link drawer-btn"><i class="fas fa-user"></i> Sign In</a>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="about-wrapper">
+    <h1 class="about-title">About Us</h1>
+    <div class="about-container">
+      <div class="goku-box">
+        <img src="images/goku.png" alt="Goku" class="goku-image" />
+      </div>
+
+      <div class="about-card">
+        <p>At Animora, we fuse the bold world of anime with the edge of streetwear.
+        We're not just a brand, we're a tribe of dreamers, warriors, and main characters.</p>
+        <p class="tagline">Welcome to Animora. Wear your power.</p>
+      </div>
+
+      <div class="luffy-box">
+        <img src="images/Luffy2.png" alt="Luffy" class="luffy-image" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById('mobileMenuToggle');
+    const closeBtn = document.getElementById('drawerClose');
+    const drawer = document.getElementById('mobileMenuDrawer');
+    const overlay = document.getElementById('mobileMenuOverlay');
+
+    function openDrawer() {
+      drawer.classList.add('active');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    if (toggleBtn) toggleBtn.addEventListener('click', openDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if (overlay) overlay.addEventListener('click', closeDrawer);
+  </script>
+
+</body>
+</html>
+

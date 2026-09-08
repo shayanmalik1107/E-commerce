@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - Animora</title>
+  <link rel="icon" href="images/nicee.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <!-- Font Awesome for Social Icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background-image: url("images/text.png");
+      background-color: #333;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 20vh;
+      background: radial-gradient(ellipse at top left, #000 30%, #57007F 80%);
+      border-bottom-left-radius: 30% 30%;
+      border-bottom-right-radius: 27% 20%;
+      z-index: 0;
+    }
+
+    .logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-text {
+  font-family: "Great Vibes", cursive;
+  font-size: 2em;
+  color: #fff;
+  display: block;
+}
+
+.logo-image {
+  display: none;
+  width: 30px;
+  height: 30px;
+}
+
+.navbar {
+  position: relative;
+  width: 100%;
+  padding: 3% 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.nav-links {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+  z-index: 2;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1em;
+  position: relative;
+}
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.4em;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+}
+
+.nav-links a:hover {
+  color: #c800ff78;
+}
+
+.monster {
+  position: absolute;
+  top: -33px;
+  right: 40px;
+  z-index: 1;
+}
+
+.monster-image {
+  width: 100%;
+  max-width: 250px;
+  height: 250px;
+}
+
+/* ---- MOBILE MENU DRAWER STYLES ---- */
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.8em;
+  cursor: pointer;
+  z-index: 10;
+  padding: 5px 10px;
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu-drawer {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100vh;
+  background: #141414;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 20px;
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.8);
+}
+
+.mobile-menu-drawer.active {
+  right: 0;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.drawer-logo {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2em;
+  color: #fff;
+}
+
+.drawer-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2em;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.drawer-close:hover {
+  color: #c800ff;
+}
+
+.drawer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.drawer-link {
+  color: #ddd;
+  text-decoration: none;
+  font-size: 1.1em;
+  padding: 12px 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+.drawer-link:hover, .drawer-link.active {
+  background: rgba(200, 0, 255, 0.2);
+  color: #fff;
+  border-left: 4px solid #c800ff;
+}
+
+.drawer-btn {
+  margin-top: 20px;
+  background: linear-gradient(100deg, #bfabab, #9405bc);
+  justify-content: center;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none !important;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  .logo-image {
+    display: inline;
+  }
+
+  .monster {
+    top: 0;
+    right: 50px;
+  }
+
+  .monster-image {
+    width: 80px;
+    height: auto;
+  }
+}
+
+    .main-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .suguru-character {
+      position: absolute;
+      top:-100px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1s;
+    }
+
+    .suguru-character img {
+      width: 300px;
+      height: auto;
+      margin-bottom: 30px;
+      margin-top: 180px;
+    }
+
+    .contact-section {
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 15px;
+      padding: 3em;
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      gap: 3em;
+      align-items: flex-start;
+      margin-top: 285px;
+      position: relative;
+    }
+
+    .sword-decoration {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .sword-decoration img {
+      width: 200px;
+      height: auto;
+    }
+
+    .red-circle {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background: #FF0000;
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .contact-form {
+      flex: 1;
+      color: #fff;
+    }
+
+    .contact-form h2 {
+      font-size: 2.5em;
+      margin-bottom: 2em;
+      text-align: left;
+      color: #fff;
+    }
+
+    .form-group {
+      margin-bottom: 2em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.5em 0;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid white;
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1em;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    .form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-bottom-color: #fff;
+    }
+
+    .submit-btn {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 0.8em 2.5em;
+      border-radius: 25px;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 2em;
+      font-size: 0.9em;
+    }
+
+    .submit-btn:hover {
+      background: #ddd;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 900px) {
+    
+      .contact-section {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .suguru-character img {
+        width: 200px;
+      }
+
+      .sword-decoration {
+        margin-bottom: 2em;
+      }
+      .status-popup {
+        font-size: small;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+white-space: nowrap; /* keep text in one line */
+overflow: hidden; /* prevent overflow */
+text-overflow: ellipsis; /* optional: adds "..." if text overflows */
+background: #147600;
+color: white;
+padding: 0.8em 1em;
+border-radius: 0; /* remove rounded edges to stretch across */
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.5s ease;
+z-index: 1000;
+cursor: pointer;
+text-align: center;
+}
+    }
+  
+    .status-popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #147600;
+  color: white;
+  padding: 0.8em 2em;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.status-popup.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* Style the textarea scrollbar */
+.contact-form textarea::-webkit-scrollbar {
+  width: 6px;
+}
+.contact-form textarea::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3); /* Figma-style thumb */
+  border-radius: 8px;
+}
+.contact-form textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+.contact-form textarea {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(255,255,255,0.3) transparent;
+}
+
+  </style>
+</head>
+<body>
+  <div class="status-popup" id="statusPopup">
+    Application submitted successfully
+  </div>
+  
+  <div class="header-background"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo-container">
+    <a href="Animora.html" class="logo-text">Animora</a>
+    <a href="Animora.html"><img src="images/nicee.png" alt="Animora Logo" class="logo-image"></a>
+  </div>
+  <div class="nav-links">
+    <a href="Animora.html"><span>Home</span></a>
+    <a href="Shop.html"><span>Shop</span></a>
+    <a href="About.html"><span>About</span></a>
+    <a href="Contact.html" class="active"><span>Contact</span></a>
+  </div>
+
+  <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open Menu">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class="monster">
+    <img src="images/monster.png" alt="Monster" class="monster-image" />
+  </div>
+</nav>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+<div class="mobile-menu-drawer" id="mobileMenuDrawer">
+  <div class="drawer-header">
+    <div class="drawer-logo">Animora</div>
+    <button class="drawer-close" id="drawerClose" aria-label="Close Menu">&times;</button>
+  </div>
+  <div class="drawer-links">
+    <a href="Animora.html" class="drawer-link"><i class="fas fa-home"></i> Home</a>
+    <a href="Shop.html" class="drawer-link"><i class="fas fa-store"></i> Shop</a>
+    <a href="About.html" class="drawer-link"><i class="fas fa-info-circle"></i> About</a>
+    <a href="Contact.html" class="drawer-link active"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="Cart.html" class="drawer-link"><i class="fas fa-shopping-cart"></i> Cart</a>
+    <a href="signin.html" class="drawer-link drawer-btn"><i class="fas fa-user"></i> Sign In</a>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const toggleBtn = document.getElementById('mobileMenuToggle');
+    const closeBtn = document.getElementById('drawerClose');
+    const drawer = document.getElementById('mobileMenuDrawer');
+    const overlay = document.getElementById('mobileMenuOverlay');
+
+    function openDrawer() {
+      drawer.classList.add('active');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    if (toggleBtn) toggleBtn.addEventListener('click', openDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if (overlay) overlay.addEventListener('click', closeDrawer);
+  })();
+</script>
+
+  
+
+  <!-- SUGURU CHARACTER -->
+  <div class="suguru-character">
+    <img src="images/suguru.png" alt="Suguru" />
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <div class="main-container">
+    <div class="contact-section">
+      <div class="sword-decoration">
+        <div class="red-circle"></div>
+        <img src="images/sword.png" alt="Sword" />
+      </div>
+
+      <div class="contact-form">
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+          <div class="form-group">
+            <input type="text" name="name" placeholder="Full Name" required />
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" placeholder="Email" required />
+          </div>
+          <div class="form-group">
+            <textarea name="message" placeholder="Message" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Contact Us</button>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+  <script>
+    const form = document.getElementById("contactForm");
+    const statusPopup = document.getElementById("statusPopup");
+    let hideTimeout;
+  
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+  
+      const formData = new FormData(form);
+  
+      try {
+        const response = await fetch("https://formspree.io/f/mldnaagv", {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        });
+  
+        if (response.ok) {
+          statusPopup.classList.add("show");
+          clearTimeout(hideTimeout);
+          hideTimeout = setTimeout(() => {
+            statusPopup.classList.remove("show");
+          }, 1500);
+          form.reset();
+        } else {
+          alert("Failed to submit. Please try again.");
+        }
+      } catch (err) {
+        alert("Error submitting form. Please try again.");
+      }
+    });
+  
+    statusPopup.addEventListener("click", () => {
+      clearTimeout(hideTimeout);
+      statusPopup.classList.remove("show");
+    });
+  </script>
+</body>
+</html>

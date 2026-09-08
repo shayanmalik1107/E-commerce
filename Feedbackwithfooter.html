@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animora - Streetwear Reborn in Anime</title>
+    <link rel="icon" href="images/nicee.png" type="image/png">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Orbitron:wght@500&family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Orbitron", sans-serif;
+        background: url("images/text.png") center center no-repeat, #333;
+        background-size: cover;
+        background-attachment: fixed;
+        color: white;
+        min-height: 100vh;
+      }
+
+      /* Add overlay to make text more readable */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .header-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 20vh;
+        background: radial-gradient(
+          ellipse at top left,
+          rgba(0, 0, 0, 0.8) 30%,
+          rgba(87, 0, 127, 0.8) 80%
+        );
+        border-bottom-left-radius: 30% 30%;
+        border-bottom-right-radius: 30% 30%;
+        z-index: 0;
+      }
+
+      .navbar {
+        position: relative;
+        width: 100%;
+        padding: 3% 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 2;
+      }
+
+      .navbar .logo {
+        font-family: "Great Vibes", cursive;
+        font-size: 2em;
+        color: #fff;
+        flex: 1;
+      }
+
+      .navbar .nav-links {
+        flex: 2;
+        display: flex;
+        justify-content: center;
+        gap: 5%;
+      }
+
+      .navbar .nav-links a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1em;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .navbar .nav-links a.active::after {
+        content: "";
+        position: absolute;
+        bottom: -0.4em;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #fff;
+      }
+
+      .navbar .monster {
+        position: absolute;
+        top: -33px;
+        right: 40px;
+        z-index: 1;
+      }
+
+      .monster-image {
+        width: 100%;
+        max-width: 250px;
+        height: 250px;
+      }
+
+      /* ----------- FIRST HERO SECTION ----------- */
+      .hero-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 50px;
+        background: linear-gradient(
+          to bottom,
+          rgb(0 0 0 / 80%),
+          rgb(47 47 47 / 80%)
+        );
+        position: relative;
+        overflow: hidden;
+        margin-top: 15px;
+      }
+
+      .hero-text {
+        max-width: 50%;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-text h1 {
+        font-size: 2em;
+        color: #fff;
+      }
+
+      .hero-text p {
+        font-size: 1em;
+        line-height: 1.6;
+        margin-top: 15px;
+        color: #ddd;
+      }
+
+      .symbol-bg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.8;
+        width: 300px;
+        z-index: 1;
+        filter: brightness(10.5);
+      }
+
+      .person-image {
+        width: 300px;
+        max-width: 90%;
+        height: auto;
+        z-index: 2;
+      }
+
+      /* ----------- PRODUCT GRID SECTION ----------- */
+      .shop-section {
+        padding: 50px 25px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        max-width: 1200px;
+        margin: auto;
+        background: linear-gradient(
+          to bottom,
+          rgba(51, 51, 51, 0.6),
+          rgba(102, 102, 102, 0.6)
+        );
+        position: relative;
+      }
+
+      @media (max-width: 900px) {
+        .shop-section {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .shop-section {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .product-card {
+        background: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.3s ease;
+        position: relative;
+        z-index: 2;
+      }
+
+      .product-card:hover {
+        transform: scale(1.05);
+      }
+
+      .product-card img {
+        width: 100%;
+        max-height: 200px;
+        object-fit: contain;
+        background-color: #222;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+
+      .product-title {
+        font-size: 0.9em;
+        margin: 8px 0;
+      }
+
+      .price {
+        color: #fff;
+        font-weight: bold;
+      }
+
+      .stars {
+        margin-top: 4px;
+        color: gold;
+      }
+
+      /* ----------- BLACK BOX SECTION ----------- */
+      .offer-box {
+        background: rgba(0, 0, 0, 0.8);
+        padding: 50px;
+        margin: 60px auto;
+        max-width: 1000px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border-radius: 15px;
+        position: relative;
+      }
+
+      .offer-box img {
+        width: 200px;
+        height: auto;
+        border-radius: 10px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .offer-content {
+        color: white;
+        max-width: 600px;
+        text-align: left;
+        position: relative;
+        z-index: 2;
+      }
+
+      .offer-content h2 {
+        font-size: 1.8em;
+        margin-bottom: 10px;
+      }
+
+      .timer {
+        display: flex;
+        gap: 20px;
+        margin: 15px 0;
+      }
+
+      .timer div {
+        background: #111;
+        padding: 10px 15px;
+        border-radius: 8px;
+      }
+
+      .buy-now {
+        padding: 10px 25px;
+        background: green;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        color: white;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+      }
+
+      .buy-now:hover {
+        background: #006600;
+      }
+
+      /* ----------- FEEDBACK SECTION ----------- */
+      .feedback-section {
+        padding: 60px 40px;
+        text-align: center;
+        margin: 60px 0;
+      }
+
+      .feedback-section h2 {
+        font-size: 32px;
+        margin-bottom: 40px;
+        font-family: "Orbitron", sans-serif;
+      }
+
+      .cards {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .card {
+        background: #1a1a1a;
+        padding: 20px;
+        max-width: 300px;
+        border-radius: 8px;
+        position: relative;
+        color: #fff;
+        font-family: "Inter", sans-serif;
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card.highlighted {
+        background: #c8f2eb;
+        color: #000;
+      }
+
+      .quote {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+
+      .card h4 {
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .card .text {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      /* ----------- FOOTER ----------- */
+      footer {
+        background-color: #000;
+        padding: 60px 40px 20px;
+        margin-top: 60px;
+        font-family: "Inter", sans-serif;
+      }
+
+      .footer-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-column h3,
+      .footer-column h4 {
+        margin-bottom: 16px;
+        color: #fff;
+      }
+
+      .footer-column h3 {
+        font-family: "Great Vibes", cursive;
+        font-size: 1.5em;
+      }
+
+      .footer-column p {
+        margin-bottom: 8px;
+        color: #ccc;
+      }
+
+      .footer-column ul {
+        list-style: none;
+      }
+
+      .footer-column ul li {
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .footer-column ul li:hover {
+        color: #fff;
+      }
+
+      .social-icons i {
+        margin-right: 12px;
+        font-size: 18px;
+        cursor: pointer;
+        color: #ccc;
+        transition: color 0.3s ease;
+      }
+
+      .social-icons i:hover {
+        color: #fff;
+      }
+
+      .footer-column form {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .footer-column input[type="email"] {
+        padding: 8px;
+        border-radius: 4px;
+        border: none;
+        width: 180px;
+        min-width: 150px;
+      }
+
+      .footer-column button {
+        background: white;
+        color: black;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .footer-column button:hover {
+        background: #f0f0f0;
+      }
+
+      .footer-bottom {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        font-size: 12px;
+        margin-top: 40px;
+        color: #999;
+      }
+
+      .footer-bottom span {
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .footer-bottom span:hover {
+        color: #fff;
+      }
+
+      /* ----------- RESPONSIVE ----------- */
+      @media (max-width: 768px) {
+        .hero-section {
+          flex-direction: column;
+          text-align: center;
+          padding: 30px;
+        }
+
+        .hero-text {
+          max-width: 100%;
+          margin-bottom: 30px;
+        }
+
+        .offer-box {
+          flex-direction: column;
+          text-align: center;
+          padding: 30px;
+        }
+
+        .offer-box img {
+          margin-bottom: 20px;
+        }
+
+        .navbar .nav-links {
+          gap: 3%;
+        }
+
+        .navbar .nav-links a {
+          font-size: 0.9em;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header-background"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="logo">Animora</div>
+      <div class="nav-links">
+        <a href="#home" class="active">Home</a>
+        <a href="#shop">Shop</a>
+        <a href="#feedback">Reviews</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="monster">
+        <img src="images/monster.png" alt="Monster" class="monster-image" />
+      </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero-section">
+      <div class="hero-text">
+        <h1>Streetwear Reborn in Anime</h1>
+        <p>
+          Inspired by legendary anime aesthetics and street culture, our gear
+          blends expressionism with high-quality threads.
+          <br />From cursed techniques to celestial drip.
+        </p>
+      </div>
+      <img src="images/person.png" alt="Wearing Shirt" class="person-image" />
+      <img src="images/symbol.png" alt="Symbol" class="symbol-bg" />
+    </section>
+
+    <!-- PRODUCT GRID SECTION -->
+    <section id="shop" class="shop-section">
+      <div class="product-card">
+        <img src="images/shirt.png" alt="Shirt" />
+        <div class="product-title">Regular Fit Long Sleeve Top</div>
+        <div class="price">$36.99</div>
+        <div class="stars">⭐ 4.7</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png" alt="Shirt" />
+        <div class="product-title">Regular Fit Long Sleeve Top</div>
+        <div class="price">$36.99</div>
+        <div class="stars">⭐ 4.0</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png" alt="Shirt" />
+        <div class="product-title">Regular Fit Long Sleeve Top</div>
+        <div class="price">$36.99</div>
+        <div class="stars">⭐ 4.5</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png" alt="Shirt" />
+        <div class="product-title">Regular Fit Long Sleeve Top</div>
+        <div class="price">$20.00</div>
+        <div class="stars">⭐ 4.1</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png" alt="Shirt" />
+        <div class="product-title">Regular Fit Long Sleeve Top</div>
+        <div class="price">$26.99</div>
+        <div class="stars">⭐ 4.3</div>
+      </div>
+      <div class="product-card">
+        <img src="images/shirt.png" alt="Shirt" />
+        <div class="product-title">Regular Fit Long Sleeve Top</div>
+        <div class="price">$22.99</div>
+        <div class="stars">⭐ 4.6</div>
+      </div>
+    </section>
+
+    <!-- EXCLUSIVE OFFER SECTION -->
+    <section class="offer-box">
+      <img src="images/shirt.png" alt="Exclusive Shirt" />
+      <div class="offer-content">
+        <h2>Exclusive Offer</h2>
+        <p>
+          Unlock the ultimate style upgrade with our exclusive offer. Enjoy
+          savings of up to 40% off on our latest tees from Animora.
+        </p>
+        <div class="timer">
+          <div>06 days</div>
+          <div>18 hours</div>
+          <div>48 min</div>
+        </div>
+        <button class="buy-now">BUY NOW</button>
+      </div>
+    </section>
+
+    <!-- FEEDBACK SECTION -->
+    <section id="feedback" class="feedback-section">
+      <h2>Feedback Corner</h2>
+      <div class="cards">
+        <div class="card">
+          <p class="quote">"</p>
+          <h4>Emily Wilson</h4>
+          <p class="text">
+            The customer experience was exceptional from start to finish. From
+            the intuitive UI to the character-driven content, one of the
+            cleanest overall designs I've seen. I'm beyond satisfied.
+          </p>
+        </div>
+        <div class="card highlighted">
+          <p class="quote">"</p>
+          <h4>Sarah Thompson</h4>
+          <p class="text">
+            I absolutely love the quality and style of the clothing I purchased
+            from this store. Excellent customer service and incredibly quick
+            order delivery. Highly recommended!
+          </p>
+        </div>
+        <div class="card">
+          <p class="quote">"</p>
+          <h4>Olivia Martinez</h4>
+          <p class="text">
+            I had a great experience shopping on this website. The sleek product
+            UI is fashionable and comfortable. Highly satisfied!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Animora</h3>
+          <p>Social Media</p>
+          <div class="social-icons">
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-facebook"></i>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Shop</h4>
+          <ul>
+            <li>Products</li>
+            <li>Overview</li>
+            <li>Pricing</li>
+            <li>Releases</li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul>
+            <li>About Us</li>
+            <li>News</li>
+            <li>Support</li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Stay Up to Date</h4>
+          <form>
+            <input type="email" placeholder="Enter your email" />
+            <button type="submit">SUBMIT</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Terms</span>
+        <span>Privacy</span>
+        <span>Cookies</span>
+      </div>
+    </footer>
+
+    <script>
+      // Add smooth scrolling for navigation links
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          // Remove active class from all links
+          document
+            .querySelectorAll(".nav-links a")
+            .forEach((l) => l.classList.remove("active"));
+
+          // Add active class to clicked link
+          this.classList.add("active");
+
+          // Get target section
+          const targetId = this.getAttribute("href").substring(1);
+          const targetSection = document.getElementById(targetId);
+
+          if (targetSection) {
+            targetSection.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Update timer countdown
+      function updateTimer() {
+        const timerElements = document.querySelectorAll(".timer div");
+        let days = parseInt(timerElements[0].textContent.split(" ")[0]);
+        let hours = parseInt(timerElements[1].textContent.split(" ")[0]);
+        let minutes = parseInt(timerElements[2].textContent.split(" ")[0]);
+
+        minutes--;
+
+        if (minutes < 0) {
+          minutes = 59;
+          hours--;
+
+          if (hours < 0) {
+            hours = 23;
+            days--;
+
+            if (days < 0) {
+              days = 0;
+              hours = 0;
+              minutes = 0;
+            }
+          }
+        }
+
+        timerElements[0].textContent = `${days
+          .toString()
+          .padStart(2, "0")} days`;
+        timerElements[1].textContent = `${hours
+          .toString()
+          .padStart(2, "0")} hours`;
+        timerElements[2].textContent = `${minutes
+          .toString()
+          .padStart(2, "0")} min`;
+      }
+
+      // Update timer every minute
+      setInterval(updateTimer, 60000);
+    </script>
+  </body>
+</html>
